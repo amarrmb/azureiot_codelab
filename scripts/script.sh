@@ -106,6 +106,24 @@ else
     REGION=${DEFAULT_REGION}
 fi
 
+# choose a resource group
+echo -e "
+${YELLOW}What is the name of the resource group to use?${NC}
+This will create a new resource group if one doesn't exist.
+Hit enter to use the default (${BLUE}${RESOURCE_GROUP}${NC})."
+read -p ">> " tmp
+RESOURCE_GROUP=${tmp:-$RESOURCE_GROUP}
+
+EXISTING=$(az group exists -g ${RESOURCE_GROUP})
+
+if ! $EXISTING; then
+    echo -e "\n${GREEN}The resource group does not currently exist.${NC}"
+    echo -e "We'll create it in ${BLUE}${REGION}${NC}."
+    az group create --name ${RESOURCE_GROUP} --location ${REGION} -o none
+    checkForError
+fi
+
+
 # Now, run the script to create the resources.
 echo -e " Hang on tight! starting to create resources"
 echo -e "
