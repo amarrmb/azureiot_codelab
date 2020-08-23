@@ -16,12 +16,12 @@
 # trust the publisher.
 ##############################################################################
 DEFAULT_REGION='eastus'
-RG_NAME='ScriptSetup-<name>'
-IOT_EDGE_VM_NAME='TestIoTEdge-<name>'
+RESOURCE_GROUP='ScriptSetup-delete'
+IOT_EDGE_VM_NAME='TestIoTEdge-vm'
 IOT_EDGE_VM_UNAME='admin'
 IOT_EDGE_VM_PASSWD="Password@$(shuf -i 1000-9999 -n 1)"
 VM_CREDENTIALS_FILE='vm-edge-device-credentials.txt'
-BASE_URL='https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts/'
+BASE_URL='https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts'
 CLOUD_INIT_URL="$BASE_URL/cloud-init.yml"
 CLOUD_INIT_FILE='cloud-init.yml'
 ARM_TEMPLATE_URL="$BASE_URL/deploy.json"
