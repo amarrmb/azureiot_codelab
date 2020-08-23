@@ -16,11 +16,11 @@
 # trust the publisher.
 ##############################################################################
 DEFAULT_REGION='eastus'
-RESOURCE_GROUP='ScriptSetup-delete'
+RESOURCE_GROUP='ScriptSetup-'
 IOT_EDGE_VM_NAME='TestIoTEdge-vm'
 IOT_EDGE_VM_ADMIN='admin'
 IOT_EDGE_VM_PWD="Password@$(shuf -i 1000-9999 -n 1)"
-VM_CREDENTIALS_FILE='vm-edge-device-credentials.txt'
+CREDENTIALS_FILE='script-credentials.txt'
 BASE_URL='https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts'
 CLOUD_INIT_URL="$BASE_URL/cloud-init.yml"
 CLOUD_INIT_FILE='cloud-init.yml'
@@ -52,7 +52,7 @@ checkForError() {
 }
 
 # First let's check if we have azure-iot extension available
-echo -e "Checking ${BLUE}azure-iot${NC} extension."
+echo -e "*Step(1/9) Checking ${BLUE}azure-iot${NC} extension.."
 az extension show -n azure-iot -o none &> /dev/null
 if [ $? -ne 0 ]; then
     echo -e "${BLUE}azure-iot${NC} extension not found. Installing ${BLUE}azure-iot${NC}."
@@ -80,9 +80,9 @@ echo -e "\n${GREEN}Your current subscription is:${NC}"
 az account show --query '[name,id]'
 
 echo -e "
-You will need to use a subscription with permissions for creating service principals (owner role provides this).
+*Step(2/9) You will need to use a subscription with permissions for creating service principals (owner role provides this).
 ${YELLOW}If you want to change to a different subscription, enter the name or id.${NC}
-Or just press enter to continue with the current subscription."
+Or just press enter to continue with the current subscription. "
 read -p ">> " SUBSCRIPTION_ID
 
 if ! test -z "$SUBSCRIPTION_ID"
@@ -94,7 +94,7 @@ fi
 
 
 # select a region for deployment
-echo -e "
+echo -e "*Step(3/9) 
 ${YELLOW}Please select a region to deploy resources from this list: centralus, eastus2, francecentral, japanwest, northcentralus, uksouth, westcentralus, westus2, australiaeast, eastasia, southeastasia, japaneast, eastus, ukwest, westus, canadacentral, koreacentral, southcentralus, australiasoutheast, centralindia, brazilsouth, westeurope, northeurope.${NC}
 Or just press enter to use ${DEFAULT_REGION}."
 read -p ">> " REGION
@@ -107,12 +107,13 @@ else
 fi
 
 # choose a resource group
-echo -e "
+echo -e "*Step(4/9) 
 ${YELLOW}What is the name of the resource group to use?${NC}
 This will create a new resource group if one doesn't exist.
 Hit enter to use the default (${BLUE}${RESOURCE_GROUP}${NC})."
 read -p ">> " tmp
 RESOURCE_GROUP=${tmp:-$RESOURCE_GROUP}
+#RESOURCE_GROUP=$RESOURCE_GROUP+tmp}
 
 EXISTING=$(az group exists -g ${RESOURCE_GROUP})
 
@@ -125,9 +126,8 @@ fi
 
 
 # Now, run the script to create the resources.
-echo -e " Hang on tight! starting to create resources"
 echo -e "
-Now we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
+*Step(5/9) Now we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
 This typically takes about 5-10 minutes.
 
 The resources are defined in a template here:
@@ -154,14 +154,14 @@ CONTAINER_REGISTRY_PASSWORD=$(az acr credential show -n $CONTAINER_REGISTRY --qu
 
 
 echo -e "
+*Step(6/9) 
 Some of the configuration for these resources can't be performed using a template.
 So, we'll handle these for you now:
 - register an IoT Edge device with the IoT Hub
-- set up a service principal (app registration) for the Media Services account
 "
 
 # configure the hub for an edge device
-echo "registering device..."
+echo "*Step(7/9) Registering device..."
 if test -z "$(az iot hub device-identity list -n $IOTHUB | grep "deviceId" | grep $EDGE_DEVICE)"; then
     az iot hub device-identity create --hub-name $IOTHUB --device-id $EDGE_DEVICE --edge-enabled -o none
     checkForError
@@ -173,6 +173,7 @@ az vm show -n $IOT_EDGE_VM_NAME -g $RESOURCE_GROUP &> /dev/null
 if [ $? -ne 0 ]; then
 
     echo -e "
+*Step(8/9)
 Finally, we'll deploy a VM that will act as your IoT Edge device"
 
     curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
@@ -200,6 +201,7 @@ Finally, we'll deploy a VM that will act as your IoT Edge device"
     checkForError
 
     echo -e "
+*Step(9/9)
 To access the VM acting as the IoT Edge device, 
 - locate it in the portal 
 - click Connect on the toolbar and choose Bastion
@@ -210,14 +212,20 @@ Username ${GREEN}$IOT_EDGE_VM_ADMIN${NC}
 Password ${GREEN}$IOT_EDGE_VM_PWD${NC}
 
 This information can be found here:
-${BLUE}$VM_CREDENTIALS_FILE${NC}"
+${BLUE}$CREDENTIALS_FILE${NC}"
 
-    echo $IOT_EDGE_VM_NAME >> $VM_CREDENTIALS_FILE
-    echo $IOT_EDGE_VM_ADMIN >> $VM_CREDENTIALS_FILE
-    echo $IOT_EDGE_VM_PWD >> $VM_CREDENTIALS_FILE
+    echo "Edge device name is: "$EDGE_DEVICE >> $CREDENTIALS_FILE
+    echo $IOT_EDGE_VM_NAME >> $CREDENTIALS_FILE
+    echo $IOT_EDGE_VM_ADMIN >> $CREDENTIALS_FILE
+    echo $IOT_EDGE_VM_PWD >> $CREDENTIALS_FILE
+    echo "You can find the resources created under this resource group: "+$RESOURCE_GROUP >> $CREDENTIALS_FILE
+    echo "Container registry keys:" >> $CREDENTIALS_FILE
+    echo $CONTAINER_REGISTRY >> $CREDENTIALS_FILE
+    echo $CONTAINER_REGISTRY_USERNAME >> $CREDENTIALS_FILE
+    echo $CONTAINER_REGISTRY_PASSWORD >> $CREDENTIALS_FILE
 
 else
-    echo -e "
+    echo -e "*Step(9/9)
 ${YELLOW}NOTE${NC}: A VM named ${YELLOW}$IOT_EDGE_VM_NAME${NC} was found in ${YELLOW}${RESOURCE_GROUP}.${NC}
 We will not attempt to redeploy the VM."
 fi
