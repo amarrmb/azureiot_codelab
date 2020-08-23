@@ -18,8 +18,8 @@
 DEFAULT_REGION='eastus'
 RESOURCE_GROUP='ScriptSetup-delete'
 IOT_EDGE_VM_NAME='TestIoTEdge-vm'
-IOT_EDGE_VM_UNAME='admin'
-IOT_EDGE_VM_PASSWD="Password@$(shuf -i 1000-9999 -n 1)"
+IOT_EDGE_VM_ADMIN='admin'
+IOT_EDGE_VM_PWD="Password@$(shuf -i 1000-9999 -n 1)"
 VM_CREDENTIALS_FILE='vm-edge-device-credentials.txt'
 BASE_URL='https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts'
 CLOUD_INIT_URL="$BASE_URL/cloud-init.yml"
@@ -128,7 +128,7 @@ fi
 echo -e " Hang on tight! starting to create resources"
 echo -e "
 Now we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
-This typically takes about 6 minutes, but the time may vary.
+This typically takes about 5-10 minutes.
 
 The resources are defined in a template here:
 ${BLUE}${ARM_TEMPLATE_URL}${NC}"
@@ -146,7 +146,7 @@ echo "${RESOURCES}"
 # capture resource configuration in variables
 IOTHUB=$(echo "${RESOURCES}" | awk '$2 ~ /Microsoft.Devices\/IotHubs$/ {print $1}')
 VNET=$(echo "${RESOURCES}" | awk '$2 ~ /Microsoft.Network\/virtualNetworks$/ {print $1}')
-EDGE_DEVICE="lva-sample-device"
+EDGE_DEVICE="script-sample-device"
 IOTHUB_CONNECTION_STRING=$(az iot hub show-connection-string --hub-name ${IOTHUB} --query='connectionString')
 CONTAINER_REGISTRY=$(echo "${RESOURCES}" | awk '$2 ~ /Microsoft.ContainerRegistry\/registries$/ {print $1}')
 CONTAINER_REGISTRY_USERNAME=$(az acr credential show -n $CONTAINER_REGISTRY --query 'username' | tr -d \")
@@ -166,14 +166,14 @@ if test -z "$(az iot hub device-identity list -n $IOTHUB | grep "deviceId" | gre
     az iot hub device-identity create --hub-name $IOTHUB --device-id $EDGE_DEVICE --edge-enabled -o none
     checkForError
 fi
-DEVICE_CONNECTION_STRING=$(az iot hub device-identity show-connection-string --device-id $EDGE_DEVICE --hub-name $IOTHUB --query='connectionString')
+DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --device-id $EDGE_DEVICE --hub-name $IOTHUB --query='connectionString')
 
 # deploy the IoT Edge runtime on a VM
 az vm show -n $IOT_EDGE_VM_NAME -g $RESOURCE_GROUP &> /dev/null
 if [ $? -ne 0 ]; then
 
     echo -e "
-Finally, we'll deploy a VM that will act as your IoT Edge device for using the LVA samples."
+Finally, we'll deploy a VM that will act as your IoT Edge device"
 
     curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
 
