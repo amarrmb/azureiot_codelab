@@ -27,6 +27,7 @@ These tasks are summarized as below:
 - Ensure you have subscription to Azure and are able to access resources via portal.azure.com
 - Familiarity with commandline: In this lab for some operations, you can either use <code>az cli</code> extension with your favourite shell terminal or use <code>shell.azure.com</code>
 - Ensure you have visual studio code (required for section 6). Download from here if you dont have it already: [Link to download VS Code](https://code.visualstudio.com/download)
+- Make sure you have the development pre-requisites for IoT Edge based on your language selection. In this example we will deploy a C# module, but you can develop other language modules as well. Carry out the suitable installation as per this guide:[VS Code develop IoT Edge modules](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-vs-code-develop-module)
 - You will also require Docker desktop to be running on your local machine (PC, Laptop). This is required for building IoT edge modules. You can download docker desktop from here: [Link to download docker desktop](https://www.docker.com/products/docker-desktop)
 
 ## Preparing the Cloud services

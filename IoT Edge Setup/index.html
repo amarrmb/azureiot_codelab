@@ -42,6 +42,7 @@
 <li>Ensure you have subscription to Azure and are able to access resources via portal.azure.com</li>
 <li>Familiarity with commandline: In this lab for some operations, you can either use <code>az cli</code> extension with your favourite shell terminal or use <code>shell.azure.com</code></li>
 <li>Ensure you have visual studio code (required for section 6). Download from here if you dont have it already: <a href="https://code.visualstudio.com/download" target="_blank">Link to download VS Code</a></li>
+<li>Make sure you have the development pre-requisites for IoT Edge based on your language selection. In this example we will deploy a C# module, but you can develop other language modules as well. Carry out the suitable installation as per this guide:<a href="https://docs.microsoft.com/en-us/azure/iot-edge/how-to-vs-code-develop-module" target="_blank">VS Code develop IoT Edge modules</a></li>
 <li>You will also require Docker desktop to be running on your local machine (PC, Laptop). This is required for building IoT edge modules. You can download docker desktop from here: <a href="https://www.docker.com/products/docker-desktop" target="_blank">Link to download docker desktop</a></li>
 </ul>
 
@@ -312,7 +313,7 @@ $ sudo iotedge logs helloworld
 <li>Some of the next steps you can start looking at is, how to query module twins, DirectMethod for more communication patterns between cloud &amp; Edge</li>
 <li>This typically forms a one time setup: a baseline on which you will write your business logic. So you can iterate on this setup as per your use-case to add additional functionality.</li>
 </ul>
-<p>Our architecture can be summarized as per below: <img alt="Goal" src="img\5d267083f298e04d.png"></p>
+<p>Our architecture can be summarized as per below: <img alt="Goal" src="img\b7b8d8bd3493d8d1.png"></p>
 <p>This forms a baseline on which you can configure different Azure services, create new business logic (cloud or device) etc.</p>
 
 
