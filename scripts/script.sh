@@ -18,7 +18,7 @@
 DEFAULT_REGION='eastus'
 RESOURCE_GROUP='ScriptSetup-'
 IOT_EDGE_VM_NAME='TestIoTEdge-vm'
-IOT_EDGE_VM_ADMIN='admin'
+IOT_EDGE_VM_ADMIN='adminuser'
 IOT_EDGE_VM_PWD="Password@$(shuf -i 1000-9999 -n 1)"
 CREDENTIALS_FILE='script-credentials.txt'
 BASE_URL='https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts'
@@ -33,6 +33,7 @@ GREEN='\033[1;32m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
 NC='\033[0m' # No Color
+Cyan="\[\033[4;36m\]"
 
 
 # Error checking routine
@@ -52,7 +53,7 @@ checkForError() {
 }
 
 # First let's check if we have azure-iot extension available
-echo -e "*Step(1/9) Checking ${BLUE}azure-iot${NC} extension.."
+echo -e "${CYAN}*Step(1/9)${NC} Checking ${BLUE}azure-iot${NC} extension.."
 az extension show -n azure-iot -o none &> /dev/null
 if [ $? -ne 0 ]; then
     echo -e "${BLUE}azure-iot${NC} extension not found. Installing ${BLUE}azure-iot${NC}."
@@ -80,7 +81,7 @@ echo -e "\n${GREEN}Your current subscription is:${NC}"
 az account show --query '[name,id]'
 
 echo -e "
-*Step(2/9) You will need to use a subscription with permissions for creating service principals (owner role provides this).
+*${CYAN}Step(2/9)${NC} You will need to use a subscription with permissions for creating service principals (owner role provides this).
 ${YELLOW}If you want to change to a different subscription, enter the name or id.${NC}
 Or just press enter to continue with the current subscription. "
 read -p ">> " SUBSCRIPTION_ID
@@ -94,7 +95,7 @@ fi
 
 
 # select a region for deployment
-echo -e "*Step(3/9) 
+echo -e "${CYAN}*Step(3/9)${NC} 
 ${YELLOW}Please select a region to deploy resources from this list: centralus, eastus2, francecentral, japanwest, northcentralus, uksouth, westcentralus, westus2, australiaeast, eastasia, southeastasia, japaneast, eastus, ukwest, westus, canadacentral, koreacentral, southcentralus, australiasoutheast, centralindia, brazilsouth, westeurope, northeurope.${NC}
 Or just press enter to use ${DEFAULT_REGION}."
 read -p ">> " REGION
@@ -107,7 +108,7 @@ else
 fi
 
 # choose a resource group
-echo -e "*Step(4/9) 
+echo -e "${CYAN}*Step(4/9)${NC} 
 ${YELLOW}What is the name of the resource group to use?${NC}
 This will create a new resource group if one doesn't exist.
 Hit enter to use the default (${BLUE}${RESOURCE_GROUP}${NC})."
@@ -127,7 +128,7 @@ fi
 
 # Now, run the script to create the resources.
 echo -e "
-*Step(5/9) Now we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
+${CYAN}*Step(5/9)${NC} Now we'll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
 This typically takes about 5-10 minutes.
 
 The resources are defined in a template here:
@@ -154,14 +155,14 @@ CONTAINER_REGISTRY_PASSWORD=$(az acr credential show -n $CONTAINER_REGISTRY --qu
 
 
 echo -e "
-*Step(6/9) 
+${CYAN}*Step(6/9)${NC} 
 Some of the configuration for these resources can't be performed using a template.
 So, we'll handle these for you now:
 - register an IoT Edge device with the IoT Hub
 "
 
 # configure the hub for an edge device
-echo "*Step(7/9) Registering device..."
+echo "${CYAN}*Step(7/9)${NC} Registering device..."
 if test -z "$(az iot hub device-identity list -n $IOTHUB | grep "deviceId" | grep $EDGE_DEVICE)"; then
     az iot hub device-identity create --hub-name $IOTHUB --device-id $EDGE_DEVICE --edge-enabled -o none
     checkForError
@@ -173,7 +174,7 @@ az vm show -n $IOT_EDGE_VM_NAME -g $RESOURCE_GROUP &> /dev/null
 if [ $? -ne 0 ]; then
 
     echo -e "
-*Step(8/9)
+${CYAN}*Step(8/9)${NC}
 Finally, we'll deploy a VM that will act as your IoT Edge device"
 
     curl -s $CLOUD_INIT_URL > $CLOUD_INIT_FILE
@@ -201,7 +202,7 @@ Finally, we'll deploy a VM that will act as your IoT Edge device"
     checkForError
 
     echo -e "
-*Step(9/9)
+${CYAN}*Step(9/9)${NC}
 To access the VM acting as the IoT Edge device, 
 - locate it in the portal 
 - click Connect on the toolbar and choose Bastion
@@ -225,7 +226,7 @@ ${BLUE}$CREDENTIALS_FILE${NC}"
     echo $CONTAINER_REGISTRY_PASSWORD >> $CREDENTIALS_FILE
 
 else
-    echo -e "*Step(9/9)
+    echo -e "${CYAN}*Step(9/9)${NC}
 ${YELLOW}NOTE${NC}: A VM named ${YELLOW}$IOT_EDGE_VM_NAME${NC} was found in ${YELLOW}${RESOURCE_GROUP}.${NC}
 We will not attempt to redeploy the VM."
 fi

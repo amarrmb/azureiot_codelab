@@ -7,6 +7,8 @@ feedback: amar.balutkar@quest-global.com
 <!-- ------------------------ -->
 <!-- ------------------------ -->
 ## Objective
+Duration: 5
+
 The objective of this hands on lab is to bringup an Azure IoT Edge solution on a new Azure account. We will use a combination of Azure portal, commandline & Visual Studio Code.
 
 By the end of this lab you would have:
@@ -27,7 +29,7 @@ These tasks are summarized as below:
 - Ensure you have visual studio code (required for section 6). Download from here if you dont have it already: [Link to download VS Code](https://code.visualstudio.com/download)
 - You will also require Docker desktop to be running on your local machine (PC, Laptop). This is required for building IoT edge modules. You can download docker desktop from here: [Link to download docker desktop](https://www.docker.com/products/docker-desktop)
 
-## Preparing the Infra 
+## Preparing the Cloud services
 Duration: 10
 
 ### Initial setup: Resource group creation (typical one time for a given project)
@@ -68,12 +70,14 @@ Now that our resource group is created, we will create other Azure resources to 
 
 ![Image 4](images/8.png)
 
-- Now our IoT Hub resource is created. Next, we will create an Azure IoT Edge device. Note: We are just creating a cloud resource and not yet connecting it to an actual device, we will do in in the later section. For now, lets just create an instance with a suitable name for the edge device.
+- Now our IoT Hub resource is created. Next, we will create an Azure IoT Edge device. 
+
+Negative
+:We are just creating a cloud resource and not yet connecting it to an actual device, we will do in in the later section. For now, lets just create an instance with a suitable name for the edge device.
 
 ![Image 4](images/10.png)
 
 ![Image 4](images/11.png)
-
 
 - Optional Step: We want to create an Azure container registry instance if you plan to develop & deploy our own IoT Edge modules.
 
@@ -210,10 +214,12 @@ Positive
 <!-- ------------------------ -->
 
 ## Monitoring Edge device & modules
+Duration: 5
 
 <!-- ------------------------ -->
 
 ## Writing your own custom module
+Duration: 20
 
 In this section, we are going to use Visual Studio Code to create a new IoT Edge module & deploy it to the IoT Edge device.
 
@@ -338,6 +344,7 @@ Positive
 
 <!-- ------------------------ -->
 ## Deploying your custom module
+Duration: 5
 
 - Before the deployment to begin, we want our local docker instance to connect to the ACR that we had created during the previous step. So open Terminal window from VS Code and run the following command:
 
@@ -420,3 +427,5 @@ Positive
 What you did till now was use Azure portal and click through the entire process of provisioning, configuration. This is good for getting started to ensure you get a good understanding of what components were created in the backend.
 
 For real world scenarios, you might need to create a replicable environment, something that you can create via a script. This could be used for development or testing (via devops) or replicating the setup from one instance to another.
+
+
