@@ -33,7 +33,7 @@ GREEN='\033[1;32m'
 RED='\033[0;31m'
 BLUE='\033[1;34m'
 NC='\033[0m' # No Color
-Cyan="\[\033[4;36m\]"
+CYAN='\033[4;36m'
 
 
 # Error checking routine

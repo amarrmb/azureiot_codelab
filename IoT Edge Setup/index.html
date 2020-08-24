@@ -27,7 +27,7 @@
                   environment="web"
                   feedback-link="">
     
-      <google-codelab-step label="Objective" duration="0">
+      <google-codelab-step label="Objective" duration="5">
         <p>The objective of this hands on lab is to bringup an Azure IoT Edge solution on a new Azure account. We will use a combination of Azure portal, commandline &amp; Visual Studio Code.</p>
 <p>By the end of this lab you would have:</p>
 <ul>
@@ -36,7 +36,7 @@
 <li>A visual studio solution from where you can write, compile/build &amp; deploy IoT edge modules which can run on the edge device that you have configured</li>
 </ul>
 <p>These tasks are summarized as below:</p>
-<p class="image-container"><img alt="Goal" src="img\d38c1f4b2d4db9dc.png"></p>
+<p class="image-container"><img alt="Goal" src="img\57579c1c48582fdc.png"></p>
 <h2 is-upgraded>What you need? (Pre-requisites)</h2>
 <ul>
 <li>Ensure you have subscription to Azure and are able to access resources via portal.azure.com</li>
@@ -48,85 +48,45 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Preparing the Infra" duration="10">
+      <google-codelab-step label="Preparing the Cloud services" duration="10">
         <h2 is-upgraded>Initial setup: Resource group creation (typical one time for a given project)</h2>
 <p>As a good practice, we want to create a new resource group. A resource group allows to group different Azure resources together belonging to the same solution or deployment.</p>
-<ul>
-<li>Once you login to Azure portal, search for Resource groups. Click on the &#34;Create&#34; button to create a new resource group.</li>
-</ul>
-<p class="image-container"><img alt="Image 1" src="img\eeda8a6e7cfbcf28.png"></p>
-<ul>
-<li>Next, select the subscription, provide the name (something that is logical for you to  for resource group &amp; select a region (the Azure datacentre where the resource group would be located).</li>
-</ul>
-<p class="image-container"><img alt="Image 2" src="img\e8cdb2f949fb43a3.png"></p>
-<ul>
-<li>Next, you can provide a &#34;tag&#34; information, which is a key value pair. A tag can carry metadata information, like type of environment:dev/QA/production etc.</li>
-</ul>
-<p class="image-container"><img alt="Image 3" src="img\631624b96b8d2d39.png"></p>
-<ul>
+<ol type="1">
+<li>Once you login to Azure portal, search for Resource groups. Click on the &#34;Create&#34; button to create a new resource group. <img alt="Image 1" src="img\d9fc511c0ac1f8b8.png"></li>
+<li>Next, select the subscription, provide the name (something that is logical for you to  for resource group &amp; select a region (the Azure datacentre where the resource group would be located). <img alt="Image 2" src="img\d598f46480a99ab6.png"></li>
+<li>Next, you can provide a &#34;tag&#34; information, which is a key value pair. A tag can carry metadata information, like type of environment:dev/QA/production etc. <img alt="Image 3" src="img\53cb2f89161dcb8b.png"></li>
 <li>Once you have filled up correctly, the validation should pass and you are ready with your resource group!</li>
-</ul>
+</ol>
 <p>Now that our resource group is created, we will create other Azure resources to be part of this resource group.</p>
 <h2 is-upgraded>Initial setup: IoT Hub creation (typical one time for a given project)</h2>
+<ol type="1">
+<li>Go to the resource group that we just created &amp; click add <img alt="Image 4" src="img\fe8a79e70c01096a.png"></li>
+<li>Next, search for IoT Hub, provide it a name and follow along the steps till the &#34;tags&#34; page. We will use the same tag that we provided earlier to be consistent with our naming. (We will keep the default options for now, but later you can change them as per the requirements) <img alt="Image 4" src="img\88e2bb1080bb3063.png"><img alt="Image 4" src="img\8de9288e81a2172e.png"><img alt="Image 4" src="img\faf753388689e0dc.png"><img alt="Image 4" src="img\34587be3f46c19d1.png"><img alt="Image 4" src="img\7697c492a961a20d.png"></li>
+<li>Now our IoT Hub resource is created. Next, we will create an Azure IoT Edge device. <img alt="Image 4" src="img\478f47ac5bd50729.png"><img alt="Image 4" src="img\80d97e498b7a0d3d.png"></li>
+</ol>
+<aside class="warning"><p>We are just creating a cloud resource and not yet connecting it to an actual device, we will do in in the later section. For now, lets just create an instance with a suitable name for the edge device.</p>
+</aside>
 <ul>
-<li>Go to the resource group that we just created &amp; click add</li>
+<li>Optional Step: We want to create an Azure container registry instance if you plan to develop &amp; deploy our own IoT Edge modules. <img alt="Image 38" src="img\488b146fbdcf5cd3.png"><img alt="Image 39" src="img\5c3bf947ef85e31b.png"><img alt="Image 40" src="img\fb7373eec14f43ae.png"></li>
 </ul>
-<p class="image-container"><img alt="Image 4" src="img\fe8a79e70c01096a.png"></p>
-<ul>
-<li>Next, search for IoT Hub, provide it a name and follow along the steps till the &#34;tags&#34; page. We will use the same tag that we provided earlier to be consistent with our naming. (We will keep the default options for now, but later you can change them as per the requirements)</li>
-</ul>
-<p class="image-container"><img alt="Image 4" src="img\c546e31400b32825.png"></p>
-<p class="image-container"><img alt="Image 4" src="img\2f45443d51f20ddc.png"></p>
-<p class="image-container"><img alt="Image 4" src="img\f87c6b9b46bd1d0b.png"></p>
-<p class="image-container"><img alt="Image 4" src="img\9f9f70bbd6c21813.png"></p>
-<p class="image-container"><img alt="Image 4" src="img\2e55479e408987fc.png"></p>
-<ul>
-<li>Now our IoT Hub resource is created. Next, we will create an Azure IoT Edge device. Note: We are just creating a cloud resource and not yet connecting it to an actual device, we will do in in the later section. For now, lets just create an instance with a suitable name for the edge device.</li>
-</ul>
-<p class="image-container"><img alt="Image 4" src="img\7cf7d2dd2b7397f3.png"></p>
-<p class="image-container"><img alt="Image 4" src="img\dfe2de2ca7d43e73.png"></p>
-<ul>
-<li>Optional Step: We want to create an Azure container registry instance if you plan to develop &amp; deploy our own IoT Edge modules.</li>
-</ul>
-<p class="image-container"><img alt="Image 38" src="img\13e41173c2c979cb.png"></p>
-<p class="image-container"><img alt="Image 39" src="img\4f9e6d8201298f61.png"></p>
-<p class="image-container"><img alt="Image 40" src="img\239e45655cb5b890.png"></p>
 <aside class="warning"><p>Make sure you save the ACR URL, registry name and the Password (all highlighted in Red). We will use these values to configure Azure IoT Edge modules for custom module development.</p>
 </aside>
 <ul>
-<li>So we have completed our first step towards our goal.In the next section we will move towards getting our edge device ready.</li>
+<li>So we have completed our first step towards our goal.In the next section we will move towards getting our edge device ready. <img alt="Image 4" src="img\638a470a1091a533.png"></li>
 </ul>
-<p class="image-container"><img alt="Image 4" src="img\638a470a1091a533.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Preparing the Edge Device" duration="10">
         <p>In this exercise, we will create a new VM instance and use it for our development. You can replace the VM with an actual physical device (eg: raspberry PI), which will require the dependencies &amp; Azure IoT Edge package to be installed as per its OS &amp; architecture.</p>
-<ul>
-<li>First, select the Ubuntu Server 18.04 LTS from the add resource page</li>
-</ul>
-<p class="image-container"><img alt="Image 13" src="img\64760b967a2de514.png"></p>
-<ul>
-<li>Next, provide the VM a name. We will also need to provide a username &amp; password which will allow us to SSH remotely into the VM</li>
-</ul>
-<p class="image-container"><img alt="Image 14" src="img\222523fe754dd972.png"></p>
-<ul>
-<li>We will have to provide a storage account name to keep diagnostic logs &amp; provide the tag name (best practice)</li>
-</ul>
-<p class="image-container"><img alt="Image 15" src="img\715961e41115fde7.png"><img alt="Image 14" src="img\ab4b6e22dcab49a2.png"></p>
-<ul>
-<li>If we have filled all parameters correctly, we should get a validation pass allowing us to create the resource</li>
-</ul>
-<p class="image-container"><img alt="Image 14" src="img\f03c59b444c63935.png"></p>
-<ul>
-<li>Once our VM is ready, lets ssh it via the username &amp; password we had set. You can access the public IP of the VM from the VM details page. We will use the cloud shell to ssh to the VM</li>
-</ul>
-<p class="image-container"><img alt="Image 14" src="img\d72002c8675821a5.png"></p>
-<ul>
-<li>Lets install the necessary packages on our edge device to be ready with Azure IoT Edge. Inside our IoT Edge device, lets follow the below steps</li>
-</ul>
-<pre><code>$ curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list &gt; ./microsoft-prod.list
+<ol type="1">
+<li>First, select the <code>Ubuntu Server 18.04 LTS</code> from the add resource page <img alt="Image 13" src="img\64760b967a2de514.png"></li>
+<li>Next, provide the VM a name. We will also need to provide a username &amp; password which will allow us to SSH remotely into the VM <img alt="Image 14" src="img\222523fe754dd972.png"></li>
+<li>We will have to provide a storage account name to keep diagnostic logs &amp; provide the tag name (best practice) <img alt="Image 15" src="img\715961e41115fde7.png"><img alt="Image 14" src="img\ab4b6e22dcab49a2.png"></li>
+<li>If we have filled all parameters correctly, we should get a validation pass allowing us to create the resource <img alt="Image 14" src="img\f03c59b444c63935.png"></li>
+<li>Once our VM is ready, lets ssh it via the username &amp; password we had set. You can access the public IP of the VM from the VM details page. We will use the cloud shell to ssh to the VM <img alt="Image 14" src="img\9cb8e2d7dca14ebc.png"></li>
+<li>Lets install the necessary packages on our edge device to be ready with Azure IoT Edge. Inside our IoT Edge device, lets follow the below steps<pre><code>$ curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list &gt; ./microsoft-prod.list
 </code></pre>
 <pre><code>$ sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/
 </code></pre>
@@ -140,251 +100,207 @@
 $ sudo apt-get install moby-cli
 $ sudo apt-get install iotedge
 </code></pre>
-<ul>
-<li>Now that IoT Edge is installed, we will connect it to the cloud resource we had created in the previous step. Let&#39;s go back to <code>portal.azure.com</code> and navigate to our IoT Edge device:</li>
-</ul>
-<p class="image-container"><img alt="Image 19" src="img\5d25dc003ae881da.png"></p>
-<ul>
-<li>Copy the primary connection string by clicking the copy button (highlighted in red)</li>
-</ul>
-<p class="image-container"><img alt="Image 19" src="img\a67d348fd4805031.png"></p>
-<ul>
-<li>Now going back to the <code>code terminal</code>, lets open the iotedge config file:</li>
-</ul>
-<pre><code>nano /etc/iotedge/config.yaml
+</li>
+<li>Now that IoT Edge is installed, we will connect it to the cloud resource we had created in the previous step. Let&#39;s go back to <code>portal.azure.com</code> and navigate to our IoT Edge device: <img alt="Image 19" src="img\5d25dc003ae881da.png"></li>
+<li>Copy the primary connection string by clicking the copy button (highlighted in red) <img alt="Image 19" src="img\b4910d81df43c346.png"></li>
+<li>Now going back to the <code>code terminal</code>, lets open the iotedge config file:<pre><code>nano /etc/iotedge/config.yaml
 #Find the below snippet:
 </code></pre>
 <pre><code># Manual provisioning configuration
 provisioning:
-  source: &#34;manual&#34;
-  device_connection_string: &#34;&lt;ADD DEVICE CONNECTION STRING HERE&gt;&#34;
-
+ source: &#34;manual&#34;
+ device_connection_string: &#34;&lt;ADD DEVICE CONNECTION STRING HERE&gt;&#34;
 # Paste the copied connection string in the above line
 </code></pre>
-<ul>
-<li>Do an iotedge check to see if we have copied it properly.</li>
-</ul>
-<aside class="warning"><p>Even though &#34;iotedge check&#34; throws some production readiness errors, we can ignore them for development usage.</p>
-</aside>
-<pre><code>$ sudo iotedge check
+</li>
+<li>Lets restart iotedge daemon so that it picks the newly added connection string<pre><code>$ sudo systemctl restart iotedge
 </code></pre>
-<ul>
-<li>Lets restart iotedge daemon so that it picks the newly added connection string</li>
-</ul>
-<pre><code>$ sudo systemctl restart iotedge
-</code></pre>
-<ul>
-<li>We can now check the status of our device by running <code>iotedge list</code></li>
-</ul>
 <pre><code>$ sudo iotedge list
 </code></pre>
-<p>It should showcase data as below:</p>
-<p class="image-container"><img alt="Image 21" src="img\232cf44bccbdc046.png"></p>
-<ul>
-<li>If you are able to see the default module running, Congrats! You have successfully connected your edge device to IoT Hub! Next we will assign modules to our IoT Edge device </li>
-</ul>
+It should showcase data as below: <img alt="Image 21" src="img\232cf44bccbdc046.png"></li>
+</ol>
+<aside class="special"><p>If you are able to see the default module running, Congrats! You have successfully connected your edge device to IoT Hub! Next we will assign modules to our IoT Edge device</p>
+</aside>
+<p class="image-container"><img alt="Goal" src="img\29d0ac64ce5db047.png"></p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Assigning modules to IoT Edge device" duration="5">
         <ul>
-<li>Lets go back to <code>portal.azure.com</code>, specifically to our IoT Edge device <img alt="Image 21" src="img\95bd98da6325d0a.png"><img alt="Image 21" src="img\8011264960faf6d9.png"><img alt="Image 21" src="img\2109085ba6620680.png"><img alt="Image 21" src="img\5778db09866d4834.png"><img alt="Image 21" src="img\5a7f295c9ac8c0.png"></li>
+<li>Lets go back to <code>portal.azure.com</code>, specifically to our IoT Edge device. We will follow along the screenshots to assign a module from marketplace to our device. <img alt="Image 21" src="img\52181de89d8b57aa.png"><img alt="Image 21" src="img\37b80739b069fd2c.png"><img alt="Image 21" src="img\b016fd1f6ca500f7.png"><img alt="Image 21" src="img\2fbfcfdad212cd73.png"></li>
+<li>On performing <code>iotedge list</code>, you should see modules running as below. The download of modules might require some time, so you can try running the command after a while if at first you dont see any modules. <img alt="Image 21" src="img\5a7f295c9ac8c0.png"></li>
 </ul>
-<aside class="special"><p>Congrats! You have now successfully assigned a module to our IoT Edge device!</p>
+<aside class="special"><p>Congrats! You have now successfully assigned a module to our IoT Edge device! Next we will look at monitoring the device.</p>
 </aside>
-<ul>
-<li>Next we will look at monitoring the device</li>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Monitoring Edge device &amp; modules" duration="5">
+        <ul>
+<li>Monitoring modules on edge: We used <code>iotedge logs</code> to monitor the logs coming from our IoT Edge modules.</li>
+<li>Device twin &amp; module twins can be used to monitor the health of the device.</li>
+<li>We will look at using built in device endpoints from Visual Studio when we go towards the custom module section.</li>
 </ul>
+<p class="image-container"><img alt="Goal" src="img\21c5b0365c977801.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Monitoring Edge device &amp; modules" duration="0">
-        
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Writing your own custom module" duration="0">
+      <google-codelab-step label="Writing your own custom module" duration="20">
         <p>In this section, we are going to use Visual Studio Code to create a new IoT Edge module &amp; deploy it to the IoT Edge device.</p>
-<ul>
-<li>Ensure you have VS Code installed.</li>
-<li>Make sure you have IoT tools installed <code>File-&gt;Preferences-&gt;Extensions-&gt;Search for &#34;IoT tools&#34;</code></li>
-</ul>
-<aside class="special"><p>Alternately, you can use hotkey Ctrl+Shift+X to open extension panel</p>
+<aside class="warning"><p>Ensure you have VS Code installed.</p>
 </aside>
-<p class="image-container"><img alt="Image 27" src="img\c45e55545b807aae.png"></p>
-<ul>
-<li>Once the extension is installed, we will create a New IoT Edge solution. First, open the command pallet via shortcut <code>Ctrl+Shift+P</code> or <code>View-&gt;Command Palette</code>.</li>
-</ul>
-<p class="image-container"><img alt="Image 28" src="img\56130ad25868dfb3.png"></p>
-<ul>
-<li>Search for &#34;Azure IoT Edge&#34; and select &#34;New IoT Edge Solution&#34;</li>
-</ul>
-<p class="image-container"><img alt="Image 29" src="img\8a0078848ee7790f.png"></p>
-<ul>
-<li>Create a new folder, this is where our code will reside</li>
-</ul>
-<p class="image-container"><img alt="Image 30" src="img\c80d2f4dd3d2328d.png"></p>
-<ul>
-<li>Next, provide a solution name, module name and edit the docker image repository with the Azure container registry name that we created in our previous section.</li>
-</ul>
-<p class="image-container"><img alt="Image 31" src="img\97185d21c2149189.png"></p>
-<ul>
-<li>Once you are done with this step, you will be prompted to update the .env file</li>
-</ul>
-<pre><code>CONTAINER_REGISTRY_USERNAME_testiotcr=
+<ol type="1">
+<li>Make sure you have IoT tools installed <code>File-&gt;Preferences-&gt;Extensions-&gt;Search for &#34;IoT tools&#34;</code>. Alternately, you can use hotkey Ctrl+Shift+X to open extension panel <img alt="Image 27" src="img\c45e55545b807aae.png"></li>
+<li>Once the extension is installed, we will create a New IoT Edge solution. First, open the command pallet via shortcut <code>Ctrl+Shift+P</code> or <code>View-&gt;Command Palette</code>. <img alt="Image 28" src="img\56130ad25868dfb3.png"></li>
+<li>Search for &#34;Azure IoT Edge&#34; and select &#34;New IoT Edge Solution&#34; <img alt="Image 29" src="img\8a0078848ee7790f.png"></li>
+<li>Create a new folder, this is where our code will reside <img alt="Image 30" src="img\c80d2f4dd3d2328d.png"></li>
+<li>Next, provide a solution name, module name and edit the docker image repository with the Azure container registry name that we created in our previous section. <img alt="Image 31" src="img\97185d21c2149189.png"></li>
+<li>Once you are done with this step, you will be prompted to update the .env file<pre><code>CONTAINER_REGISTRY_USERNAME_testiotcr=
 CONTAINER_REGISTRY_PASSWORD_testiotcr=
-# Update these parameters with the username &amp; password you had copied earlier
 </code></pre>
-<ul>
-<li>The module has its own bootstrapping code. You can review the Program.cs file, specifically the PipeMessage:</li>
-</ul>
-<pre><code>   /// &lt;summary&gt;
-        /// This method is called whenever the module is sent a message from the EdgeHub. 
-        /// It just pipe the messages without any change.
-        /// It prints all the incoming messages.
-        /// &lt;/summary&gt;
-        static async Task&lt;MessageResponse&gt; PipeMessage(Message message, object userContext)
+<pre><code># Update these parameters with the username &amp; password you had copied earlier
+</code></pre>
+</li>
+<li>The module has its own bootstrapping code. You can review the Program.cs file, specifically the PipeMessage:<pre><code>    /// &lt;summary&gt;
+    /// This method is called whenever the module is sent a message from the EdgeHub. 
+    /// It just pipe the messages without any change.
+    /// It prints all the incoming messages.
+    /// &lt;/summary&gt;
+    static async Task&lt;MessageResponse&gt; PipeMessage(Message message, object userContext)
+    {
+        int counterValue = Interlocked.Increment(ref counter);
+
+
+        var moduleClient = userContext as ModuleClient;
+        if (moduleClient == null)
         {
-            int counterValue = Interlocked.Increment(ref counter);
+            throw new InvalidOperationException(&#34;UserContext doesn&#39;t contain &#34; + &#34;expected values&#34;);
+        }
 
-            var moduleClient = userContext as ModuleClient;
-            if (moduleClient == null)
-            {
-                throw new InvalidOperationException(&#34;UserContext doesn&#39;t contain &#34; + &#34;expected values&#34;);
-            }
 
-            byte[] messageBytes = message.GetBytes();
-            string messageString = Encoding.UTF8.GetString(messageBytes);
-            Console.WriteLine($&#34;Received message: {counterValue}, Body: [{messageString}]&#34;);
-            
-            if (!string.IsNullOrEmpty(messageString))
+        byte[] messageBytes = message.GetBytes();
+        string messageString = Encoding.UTF8.GetString(messageBytes);
+        Console.WriteLine($&#34;Received message: {counterValue}, Body: [{messageString}]&#34;);
+
+
+        if (!string.IsNullOrEmpty(messageString))
+        {
+            using (var pipeMessage = new Message(messageBytes))
             {
-                using (var pipeMessage = new Message(messageBytes))
+                foreach (var prop in message.Properties)
                 {
-                    foreach (var prop in message.Properties)
-                    {
-                        pipeMessage.Properties.Add(prop.Key, prop.Value);
-                    }
-                    await moduleClient.SendEventAsync(&#34;output1&#34;, pipeMessage);
-                
-                    Console.WriteLine(&#34;Received message sent&#34;);
+                    pipeMessage.Properties.Add(prop.Key, prop.Value);
                 }
-            }
-            return MessageResponse.Completed;
-        }
+                await moduleClient.SendEventAsync(&#34;output1&#34;, pipeMessage);
 
-</code></pre>
-<ul>
-<li>Next, we will review the <code>deployment.template.json</code> file. At this stage, you should see the module &amp; route information as per below. The SimulatedTemperatureSensor is a default module which we have inherited module (which we can remove later). The helloworld is the module that we created which currently has default boilerplate code.</li>
-</ul>
-<pre><code>&#34;modules&#34;: {
-          &#34;helloworld&#34;: {
-            &#34;version&#34;: &#34;1.0&#34;,
-            &#34;type&#34;: &#34;docker&#34;,
-            &#34;status&#34;: &#34;running&#34;,
-            &#34;restartPolicy&#34;: &#34;always&#34;,
-            &#34;settings&#34;: {
-              &#34;image&#34;: &#34;${MODULES.helloworld}&#34;,
-              &#34;createOptions&#34;: {}
+
+                Console.WriteLine(&#34;Received message sent&#34;);
             }
-          },
-          &#34;SimulatedTemperatureSensor&#34;: {
-            &#34;version&#34;: &#34;1.0&#34;,
-            &#34;type&#34;: &#34;docker&#34;,
-            &#34;status&#34;: &#34;running&#34;,
-            &#34;restartPolicy&#34;: &#34;always&#34;,
-            &#34;settings&#34;: {
-              &#34;image&#34;: &#34;mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0&#34;,
-              &#34;createOptions&#34;: {}
-            }
-          }
         }
-      }
-    },
-    &#34;$edgeHub&#34;: {
-      &#34;properties.desired&#34;: {
-        &#34;schemaVersion&#34;: &#34;1.0&#34;,
-        &#34;routes&#34;: {
-          &#34;helloworldToIoTHub&#34;: &#34;FROM /messages/modules/helloworld/outputs/* INTO $upstream&#34;,
-          &#34;sensorTohelloworld&#34;: &#34;FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\&#34;/modules/helloworld/inputs/input1\&#34;)&#34;
-        },
-        &#34;storeAndForwardConfiguration&#34;: {
-          &#34;timeToLiveSecs&#34;: 7200
+        return MessageResponse.Completed;
+    }
+</code></pre>
+<pre><code># If you are using a different language binding, you will find similar function in your code
+</code></pre>
+</li>
+<li>Next, we will review the <code>deployment.template.json</code> file. At this stage, you should see the module &amp; route information as per below. The SimulatedTemperatureSensor is a default module which we have inherited module (which we can remove later). The helloworld is the module that we created which currently has default boilerplate code.<pre><code>&#34;modules&#34;: {
+      &#34;helloworld&#34;: {
+        &#34;version&#34;: &#34;1.0&#34;,
+        &#34;type&#34;: &#34;docker&#34;,
+        &#34;status&#34;: &#34;running&#34;,
+        &#34;restartPolicy&#34;: &#34;always&#34;,
+        &#34;settings&#34;: {
+          &#34;image&#34;: &#34;${MODULES.helloworld}&#34;,
+          &#34;createOptions&#34;: {}
+        }
+      },
+      &#34;SimulatedTemperatureSensor&#34;: {
+        &#34;version&#34;: &#34;1.0&#34;,
+        &#34;type&#34;: &#34;docker&#34;,
+        &#34;status&#34;: &#34;running&#34;,
+        &#34;restartPolicy&#34;: &#34;always&#34;,
+        &#34;settings&#34;: {
+          &#34;image&#34;: &#34;mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0&#34;,
+          &#34;createOptions&#34;: {}
         }
       }
     }
   }
+},
+&#34;$edgeHub&#34;: {
+  &#34;properties.desired&#34;: {
+    &#34;schemaVersion&#34;: &#34;1.0&#34;,
+    &#34;routes&#34;: {
+      &#34;helloworldToIoTHub&#34;: &#34;FROM /messages/modules/helloworld/outputs/* INTO $upstream&#34;,
+      &#34;sensorTohelloworld&#34;: &#34;FROM /messages/modules/SimulatedTemperatureSensor/outputs/temperatureOutput INTO BrokeredEndpoint(\&#34;/modules/helloworld/inputs/input1\&#34;)&#34;
+    },
+    &#34;storeAndForwardConfiguration&#34;: {
+      &#34;timeToLiveSecs&#34;: 7200
+    }
+  }
+}
+}
 </code></pre>
+<pre><code># Snippet
+</code></pre>
+</li>
+</ol>
 <aside class="special"><p>The important thing to understand from the above is, we have 2 modules: Temperature sensor generates simulated data &amp; sends it to hello world (as defined in the &#34;sensorTohelloworld&#34; route). The hellow world module sends the message to IoT Hub (as defined in the &#34;hellowworldToIoTHub&#34; route). The exact code in helloworld which does this is showcased above in the Program.cs:PipeMessage()</p>
 </aside>
-<ul>
-<li>In the next step, we will cover building &amp; deploying the custom module to the IoT Edge device we had created earlier.</li>
-</ul>
+<p>In the next step, we will cover building &amp; deploying the custom module to the IoT Edge device we had created earlier.</p>
+<p class="image-container"><img alt="Goal" src="img\b58d7c9cce2814b8.png"></p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Deploying your custom module" duration="0">
-        <ul>
-<li>Before the deployment to begin, we want our local docker instance to connect to the ACR that we had created during the previous step. So open Terminal window from VS Code and run the following command:</li>
-</ul>
-<pre><code>$ docker login testiotcr.azurecr.io # This URL should be replaced by the name of your ACR
+      <google-codelab-step label="Deploying your custom module" duration="5">
+        <ol type="1">
+<li>Before the deployment to begin, we want our local docker instance to connect to the ACR that we had created during the previous step. So open Terminal window from VS Code and run the following command:<pre><code>$ docker login testiotcr.azurecr.io 
 Username: testiotcr
 Password:
 Login Succeeded
 </code></pre>
-<ul>
-<li>We are now ready to build &amp; deploy the IoT edge module. Right click the <code>deployment.template.json</code> file to select option <code>&#34;Build and Push IoT Edge Solution&#34;</code>. This will generate the final deployment file and also push the IoT edge docker images to the ACR</li>
-</ul>
-<p class="image-container"><img alt="Image 32" src="img\cda788f41ecf0116.png"></p>
-<ul>
-<li>Now, right click on <code>config/deployment.amd64.json</code> file and select <code>&#34;Create Deployment for Single Device&#34;</code></li>
-</ul>
-<p class="image-container"><img alt="Image 34" src="img\e416b8472feab444.png"></p>
-<ul>
-<li>You will be prompted to select the IoT Edge device that we had created earlier in Step 3. Once you select the device, you should see following message on the console:</li>
-</ul>
-<pre><code>[Edge] Start deployment to device [edgedevice] #This name might be different as per your device name that you have provided earlier
+<pre><code># This URL should be replaced by the name of your ACR
+</code></pre>
+</li>
+<li>We are now ready to build &amp; deploy the IoT edge module. Right click the <code>deployment.template.json</code> file to select option <code>&#34;Build and Push IoT Edge Solution&#34;</code>. This will generate the final deployment file and also push the IoT edge docker images to the ACR <img alt="Image 32" src="img\cda788f41ecf0116.png"></li>
+<li>Now, right click on <code>config/deployment.amd64.json</code> file and select <code>&#34;Create Deployment for Single Device&#34;</code><img alt="Image 34" src="img\e416b8472feab444.png"></li>
+<li>You will be prompted to select the IoT Edge device that we had created earlier in Step 3. Once you select the device, you should see following message on the console:<pre><code>[Edge] Start deployment to device [edgedevice] #This name might be different as per your device name that you have provided earlier
 [Edge] Deployment succeeded.
 </code></pre>
-<ul>
-<li>In VS Code, select the IoT Edge device where we have deployed the module, right click and select <code>Start Monitoring Built-in Event Endpoint&#34;</code>. This will allow you to monitor any messages that your device sends to the cloud (IoT Hub)</li>
-</ul>
-<p class="image-container"><img alt="Image 41" src="img\8adcef7c8a33f954.png"></p>
-<ul>
-<li>You can go to <code>shell.azure.com</code> and list the running modules:</li>
-</ul>
-<pre><code>$ sudo iotedge list
+<pre><code></code></pre>
+</li>
+<li>In VS Code, select the IoT Edge device where we have deployed the module, right click and select <code>Start Monitoring Built-in Event Endpoint&#34;</code>. This will allow you to monitor any messages that your device sends to the cloud (IoT Hub) <img alt="Image 41" src="img\8adcef7c8a33f954.png"></li>
+<li>You can go to <code>shell.azure.com</code> and list the running modules:<pre><code>$ sudo iotedge list
 NAME                        STATUS           DESCRIPTION      CONFIG
 SimulatedTemperatureSensor  running          Up 2 minutes     mcr.microsoft.com/azureiotedge-simulated-temperature-sensor:1.0
 edgeAgent                   running          Up 2 minutes     mcr.microsoft.com/azureiotedge-agent:1.0
 edgeHub                     running          Up 2 minutes     mcr.microsoft.com/azureiotedge-hub:1.0
 helloworld                  running          Up 2 minutes     testiotcr.azurecr.io/helloworld:0.0.1-amd64
 </code></pre>
-<ul>
-<li>Restart the SimulatedTemperatureSensor module. This simulated module sends 500 messages at the start and goes back to sleep</li>
-</ul>
-<pre><code>$ sudo iotedge restart SimulatedTemperatureSensor
+<pre><code></code></pre>
+</li>
+<li>Restart the SimulatedTemperatureSensor module. This simulated module sends 500 messages at the start and goes back to sleep<pre><code>$ sudo iotedge restart SimulatedTemperatureSensor
 </code></pre>
-<aside class="warning"><p>Incase you dont see all modules, you can restart iotedge daemon as follows to ensure it pulls latest images while starting up:</p>
-</aside>
-<pre><code>$ sudo systemctl restart iotedge
+<pre><code></code></pre>
+</li>
+<li>Incase you dont see all modules, you can restart iotedge daemon as follows to ensure it pulls latest images while starting up:<pre><code>$ sudo systemctl restart iotedge
 </code></pre>
-<ul>
-<li>You should start seeing messages coming in your VSCode as below:</li>
-</ul>
-<p class="image-container"><img alt="Image 41" src="img\efcdc784fea4827e.png"></p>
-<ul>
-<li>You can also check the logs on the IoT Edge device by running following commands on shell:</li>
-</ul>
-<pre><code>$ sudo iotedge logs SimulatedTemperatureSensor
+<pre><code></code></pre>
+</li>
+<li>You should start seeing messages coming in your VSCode as below: <img alt="Image 41" src="img\efcdc784fea4827e.png"></li>
+<li>You can also check the logs on the IoT Edge device by running following commands on shell:<pre><code>$ sudo iotedge logs SimulatedTemperatureSensor
 $ sudo iotedge logs helloworld
 </code></pre>
-<p>This completes our exercise</p>
+<pre><code></code></pre>
+</li>
+</ol>
 <aside class="special"><p>You were able to deploy a custom module, Showcase intermodule communication, Send data from one module to cloud (IoT Hub) for further processing</p>
 </aside>
+<p class="image-container"><img alt="Goal" src="img\7c59c5e1212f38ad.png"></p>
 
 
       </google-codelab-step>
@@ -396,13 +312,245 @@ $ sudo iotedge logs helloworld
 <li>Some of the next steps you can start looking at is, how to query module twins, DirectMethod for more communication patterns between cloud &amp; Edge</li>
 <li>This typically forms a one time setup: a baseline on which you will write your business logic. So you can iterate on this setup as per your use-case to add additional functionality.</li>
 </ul>
+<p>Our architecture can be summarized as per below: <img alt="Goal" src="img\5d267083f298e04d.png"></p>
+<p>This forms a baseline on which you can configure different Azure services, create new business logic (cloud or device) etc.</p>
 
 
       </google-codelab-step>
     
-      <google-codelab-step label="Bonus" duration="0">
-        <p>What you did till now was use Azure portal and click through the entire process of provisioning, configuration. This is good for getting started to ensure you get a good understanding of what components were created in the backend.</p>
-<p>For real world scenarios, you might need to create a replicable environment, something that you can create via a script. This could be used for development or testing (via devops) or replicating the setup from one instance to another.</p>
+      <google-codelab-step label="Bonus" duration="10">
+        <ol type="1">
+<li>What you did till now was use Azure portal and click through the entire process of provisioning, configuration. This is good for getting started to ensure you get a good understanding of what components were created in the backend.</li>
+<li>For real world scenarios, you might need to create a replicable environment, something that you can create via a script. This could be used for development or testing (via devops) or replicating the setup from one instance to another.</li>
+<li>Lets open <code>shell.azure.com</code></li>
+<li>We are going to run the following script on the shell. This script creates &amp; configures Azure resources in a new resource group, allowing a new setup to created in few minutes. This script could be invoked via CI/CD pipelines (for example in your development setup), allowing to replicate, test a new setup with your business logic. We make use of Azure Resource Manager template &amp; Cloud-Init scripts.<pre><code># Run following command on cloud shell
+bash -c &#34;$(curl -sL https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts/script.sh)&#34;
+</code></pre>
+<pre><code>#!/usr/bin/env bash
+# Author: &lt;amar.balutkar@quest-global.com&gt;
+##############################################################################
+#                               !!! IMPORTANT !!!
+# This script showcases how to deploy &amp; configure Azure resources using
+# azure-cli. It is primarily meant to be run on https://shell.azure.com and 
+# not tested to PowerShell or other types of shell.
+#
+# You will need an Azure subscription with permissions to create/configure 
+# Azure resources for running the script
+#
+# Before you run this script, ensure you are changing the &lt;name&gt; parameter to 
+# ensure the namespace we choose is unique.
+#
+# As a sound security practice, never run scripts from the internet unless you
+# trust the publisher.
+##############################################################################
+DEFAULT_REGION=&#39;eastus&#39;
+RESOURCE_GROUP=&#39;ScriptSetup-&#39;
+IOT_EDGE_VM_NAME=&#39;TestIoTEdge-vm&#39;
+IOT_EDGE_VM_ADMIN=&#39;adminuser&#39;
+IOT_EDGE_VM_PWD=&#34;Password@$(shuf -i 1000-9999 -n 1)&#34;
+CREDENTIALS_FILE=&#39;script-credentials.txt&#39;
+BASE_URL=&#39;https://raw.githubusercontent.com/amarrmb/azureiot_codelab/master/scripts&#39;
+CLOUD_INIT_URL=&#34;$BASE_URL/cloud-init.yml&#34;
+CLOUD_INIT_FILE=&#39;cloud-init.yml&#39;
+ARM_TEMPLATE_URL=&#34;$BASE_URL/deploy.json&#34;
+# Colors for formatting the output
+YELLOW=&#39;\033[1;33m&#39;
+GREEN=&#39;\033[1;32m&#39;
+RED=&#39;\033[0;31m&#39;
+BLUE=&#39;\033[1;34m&#39;
+NC=&#39;\033[0m&#39; # No Color
+CYAN=&#39;\033[4;36m&#39;
+# Error checking routine
+checkForError() {
+if [ $? -ne 0 ]; then
+    echo -e &#34;\n${RED}Something went wrong:${NC}
+Please read any error messages carefully.
+After addressing any errors, you can safely run this script again.
+Note:
+- If you rerun the script with the same subscription and resource group,
+  it will attempt to continue where it left off.
+- Some problems with Azure Cloud Shell may be restarting from the toolbar:
+  https://docs.microsoft.com/azure/cloud-shell/using-the-shell-window#restart-cloud-shell
+&#34;
+    exit 1
+fi
+}
+# First let&#39;s check if we have azure-iot extension available
+echo -e &#34;${CYAN}*Step(1/9)${NC} Checking ${BLUE}azure-iot${NC} extension..&#34;
+az extension show -n azure-iot -o none &amp;&gt; /dev/null
+if [ $? -ne 0 ]; then
+echo -e &#34;${BLUE}azure-iot${NC} extension not found. Installing ${BLUE}azure-iot${NC}.&#34;
+az extension add --name azure-iot &amp;&gt; /dev/null
+echo -e &#34;${BLUE}azure-iot${NC} extension is now installed.&#34;
+else
+az extension update --name azure-iot &amp;&gt; /dev/null
+echo -e &#34;${BLUE}azure-iot${NC} extension is up to date.&#34;														  
+fi
+# Since we are running from cloud shell, we are already logged in. Incase we
+# want to login, uncomment following function:
+# az account show -o none
+# if [ $? -ne 0 ]; then
+#     echo -e &#34;\nRunning &#39;az login&#39; for you.&#34;
+#     az login -o none
+# fi
+# query subscriptions
+echo -e &#34;\n${GREEN}You have access to the following subscriptions:${NC}&#34;
+az account list --query &#39;[].{name:name,&#34;subscription Id&#34;:id}&#39; --output table
+echo -e &#34;\n${GREEN}Your current subscription is:${NC}&#34;
+az account show --query &#39;[name,id]&#39;
+echo -e &#34;
+*${CYAN}Step(2/9)${NC} You will need to use a subscription with permissions for creating service principals (owner role provides this).
+${YELLOW}If you want to change to a different subscription, enter the name or id.${NC}
+Or just press enter to continue with the current subscription. &#34;
+read -p &#34;&gt;&gt; &#34; SUBSCRIPTION_ID
+if ! test -z &#34;$SUBSCRIPTION_ID&#34;
+then 
+az account set -s &#34;$SUBSCRIPTION_ID&#34;
+echo -e &#34;\n${GREEN}Now using:${NC}&#34;
+az account show --query &#39;[name,id]&#39;
+fi 
+# select a region for deployment
+echo -e &#34;${CYAN}*Step(3/9)${NC} 
+${YELLOW}Please select a region to deploy resources from this list: centralus, eastus2, francecentral, japanwest, northcentralus, uksouth, westcentralus, westus2, australiaeast, eastasia, southeastasia, japaneast, eastus, ukwest, westus, canadacentral, koreacentral, southcentralus, australiasoutheast, centralindia, brazilsouth, westeurope, northeurope.${NC}
+Or just press enter to use ${DEFAULT_REGION}.&#34;
+read -p &#34;&gt;&gt; &#34; REGION
+if [[ &#34;$REGION&#34; =~ ^(centralus|eastus2|francecentral|japanwest|northcentralus|uksouth|westcentralus|westus2|australiaeast|eastasia|southeastasia|japaneast|eastus|ukwest|westus|canadacentral|koreacentral|southcentralus|australiasoutheast|centralindia|brazilsouth|westeurope|northeurope)$ ]]; then
+echo -e &#34;\n${GREEN}Now using:${NC} $REGION&#34;
+else
+echo -e &#34;\n${GREEN}Defaulting to:${NC} ${DEFAULT_REGION}&#34;
+REGION=${DEFAULT_REGION}
+fi
+# choose a resource group
+echo -e &#34;${CYAN}*Step(4/9)${NC} 
+${YELLOW}What is the name of the resource group to use?${NC}
+This will create a new resource group if one doesn&#39;t exist.
+Hit enter to use the default (${BLUE}${RESOURCE_GROUP}${NC}).&#34;
+read -p &#34;&gt;&gt; &#34; tmp
+RESOURCE_GROUP=${tmp:-$RESOURCE_GROUP}
+#RESOURCE_GROUP=$RESOURCE_GROUP+tmp}
+EXISTING=$(az group exists -g ${RESOURCE_GROUP})
+if ! $EXISTING; then
+echo -e &#34;\n${GREEN}The resource group does not currently exist.${NC}&#34;
+echo -e &#34;We&#39;ll create it in ${BLUE}${REGION}${NC}.&#34;
+az group create --name ${RESOURCE_GROUP} --location ${REGION} -o none
+checkForError
+fi
+# Now, run the script to create the resources.
+echo -e &#34;
+${CYAN}*Step(5/9)${NC} Now we&#39;ll deploy some resources to ${GREEN}${RESOURCE_GROUP}.${NC}
+This typically takes about 5-10 minutes.
+The resources are defined in a template here:
+${BLUE}${ARM_TEMPLATE_URL}${NC}&#34;
+ROLE_DEFINITION_NAME=$(az deployment group create --resource-group $RESOURCE_GROUP --template-uri $ARM_TEMPLATE_URL --query properties.outputs.roleName.value | tr -d \&#34;)
+checkForError
+# query the resource group to see what has been deployed
+# this includes everything in the resource group, and not just the resources deployed by the template
+echo -e &#34;\nResource group now contains these resources:&#34;
+RESOURCES=$(az resource list --resource-group $RESOURCE_GROUP --query &#39;[].{name:name,&#34;Resource Type&#34;:type}&#39; -o table)
+echo &#34;${RESOURCES}&#34;
+# capture resource configuration in variables
+IOTHUB=$(echo &#34;${RESOURCES}&#34; | awk &#39;$2 ~ /Microsoft.Devices\/IotHubs$/ {print $1}&#39;)
+VNET=$(echo &#34;${RESOURCES}&#34; | awk &#39;$2 ~ /Microsoft.Network\/virtualNetworks$/ {print $1}&#39;)
+EDGE_DEVICE=&#34;script-sample-device&#34;
+IOTHUB_CONNECTION_STRING=$(az iot hub show-connection-string --hub-name ${IOTHUB} --query=&#39;connectionString&#39;)
+CONTAINER_REGISTRY=$(echo &#34;${RESOURCES}&#34; | awk &#39;$2 ~ /Microsoft.ContainerRegistry\/registries$/ {print $1}&#39;)
+CONTAINER_REGISTRY_USERNAME=$(az acr credential show -n $CONTAINER_REGISTRY --query &#39;username&#39; | tr -d \&#34;)
+CONTAINER_REGISTRY_PASSWORD=$(az acr credential show -n $CONTAINER_REGISTRY --query &#39;passwords[0].value&#39; | tr -d \&#34;)
+echo -e &#34;
+${CYAN}*Step(6/9)${NC} 
+Some of the configuration for these resources can&#39;t be performed using a template.
+So, we&#39;ll handle these for you now:
+- register an IoT Edge device with the IoT Hub
+&#34;
+# configure the hub for an edge device
+echo &#34;${CYAN}*Step(7/9)${NC} Registering device...&#34;
+if test -z &#34;$(az iot hub device-identity list -n $IOTHUB | grep &#34;deviceId&#34; | grep $EDGE_DEVICE)&#34;; then
+az iot hub device-identity create --hub-name $IOTHUB --device-id $EDGE_DEVICE --edge-enabled -o none
+checkForError
+fi
+DEVICE_CONNECTION_STRING=$(az iot hub device-identity connection-string show --device-id $EDGE_DEVICE --hub-name $IOTHUB --query=&#39;connectionString&#39;)
+# deploy the IoT Edge runtime on a VM
+az vm show -n $IOT_EDGE_VM_NAME -g $RESOURCE_GROUP &amp;&gt; /dev/null
+if [ $? -ne 0 ]; then
+echo -e &#34;
+${CYAN}*Step(8/9)${NC}
+Finally, we&#39;ll deploy a VM that will act as your IoT Edge device&#34;
+curl -s $CLOUD_INIT_URL &gt; $CLOUD_INIT_FILE
+# here be dragons
+# sometimes a / is present in the connection string and it breaks sed
+# this escapes the /
+DEVICE_CONNECTION_STRING=${DEVICE_CONNECTION_STRING//\//\\/} 
+sed -i &#34;s/xDEVICE_CONNECTION_STRINGx/${DEVICE_CONNECTION_STRING//\&#34;/}/g&#34; $CLOUD_INIT_FILE
+az vm create \
+--resource-group $RESOURCE_GROUP \
+--name $IOT_EDGE_VM_NAME \
+--image Canonical:UbuntuServer:18.04-LTS:latest \
+--admin-username $IOT_EDGE_VM_ADMIN \
+--admin-password $IOT_EDGE_VM_PWD \
+--vnet-name $VNET \
+--subnet &#39;default&#39; \
+--custom-data $CLOUD_INIT_FILE \
+--public-ip-address &#34;&#34; \
+--size &#34;Standard_DS3_v2&#34; \
+--tags environment=dev \
+--output none
+checkForError
+echo -e &#34;
+${CYAN}*Step(9/9)${NC}
+To access the VM acting as the IoT Edge device, 
+- locate it in the portal 
+- click Connect on the toolbar and choose Bastion
+- enter the username and password below
+The VM is named ${GREEN}$IOT_EDGE_VM_NAME${NC}
+Username ${GREEN}$IOT_EDGE_VM_ADMIN${NC}
+Password ${GREEN}$IOT_EDGE_VM_PWD${NC}
+This information can be found here:
+${BLUE}$CREDENTIALS_FILE${NC}&#34;
+echo &#34;Edge device name is: &#34;$EDGE_DEVICE &gt;&gt; $CREDENTIALS_FILE
+echo $IOT_EDGE_VM_NAME &gt;&gt; $CREDENTIALS_FILE
+echo $IOT_EDGE_VM_ADMIN &gt;&gt; $CREDENTIALS_FILE
+echo $IOT_EDGE_VM_PWD &gt;&gt; $CREDENTIALS_FILE
+echo &#34;You can find the resources created under this resource group: &#34;+$RESOURCE_GROUP &gt;&gt; $CREDENTIALS_FILE
+echo &#34;Container registry keys:&#34; &gt;&gt; $CREDENTIALS_FILE
+echo $CONTAINER_REGISTRY &gt;&gt; $CREDENTIALS_FILE
+echo $CONTAINER_REGISTRY_USERNAME &gt;&gt; $CREDENTIALS_FILE
+echo $CONTAINER_REGISTRY_PASSWORD &gt;&gt; $CREDENTIALS_FILE
+else
+echo -e &#34;${CYAN}*Step(9/9)${NC}
+${YELLOW}NOTE${NC}: A VM named ${YELLOW}$IOT_EDGE_VM_NAME${NC} was found in ${YELLOW}${RESOURCE_GROUP}.${NC}
+We will not attempt to redeploy the VM.&#34;
+fi
+</code></pre>
+</li>
+<li>The above script takes around 5-10 mins. You can refer the Credential.txt file which showcases the output which you can connect.</li>
+</ol>
+<aside class="warning"><p>EXERCISE: Deploy the IoT edge &#34;hello world&#34; module that you developed earlier to this device.</p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="References" duration="0">
+        <ul>
+<li>Documentation references<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-hub/" target="_blank">Azure IoT Hub documentation</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-edge/" target="_blank">Azure IoT Edge documentation</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/iot-edge/troubleshoot" target="_blank">Azure IoT Edge troubleshooting</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/azure-bastion/" target="_blank">Azure Bastion</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-monitor/" target="_blank">Azure Monitor</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/" target="_blank">Azure Resource Manager</a></li>
+</ul>
+</li>
+<li>Azure IoT Edge reference commands<pre><code>$ journalctl -u iotedge --no-pager --no-full # IoT Edge daemon logs
+</code></pre>
+<pre><code>$ sudo systemctl restart iotedge # restart IoT Edge runtime
+</code></pre>
+<pre><code>$ sudo iotedge list # list available modules
+</code></pre>
+<pre><code>$ sudo iotedge check # troubleshooting
+</code></pre>
+</li>
+</ul>
 
 
       </google-codelab-step>
